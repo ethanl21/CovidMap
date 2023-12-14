@@ -1,84 +1,78 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import Helmet from 'react-helmet';
 import L from 'leaflet';
-import { Marker } from 'react-leaflet';
+//import { Marker } from 'react-leaflet';
+import axios from 'axios';
 
-import { promiseToFlyTo, getCurrentLocation } from 'lib/map';
+//import { promiseToFlyTo, getCurrentLocation } from 'lib/map';
 
 import Layout from 'components/Layout';
 import Container from 'components/Container';
 import Map from 'components/Map';
 
-import gatsby_astronaut from 'assets/images/gatsby-astronaut.jpg';
-
 const LOCATION = {
   lat: 38.9072,
-  lng: -77.0369
+  lng: -77.0369,
 };
 const CENTER = [LOCATION.lat, LOCATION.lng];
 const DEFAULT_ZOOM = 2;
-const ZOOM = 10;
-
-const timeToZoom = 2000;
-const timeToOpenPopupAfterZoom = 4000;
-const timeToUpdatePopupAfterZoom = timeToOpenPopupAfterZoom + 3000;
-
-const popupContentHello = `<p>Hello 👋</p>`;
-const popupContentGatsby = `
-  <div class="popup-gatsby">
-    <div class="popup-gatsby-image">
-      <img class="gatsby-astronaut" src=${gatsby_astronaut} />
-    </div>
-    <div class="popup-gatsby-content">
-      <h1>Gatsby Leaflet Starter</h1>
-      <p>Welcome to your new Gatsby site. Now go build something great!</p>
-    </div>
-  </div>
-`;
 
 const IndexPage = () => {
-  const markerRef = useRef();
-
   /**
    * mapEffect
    * @description Fires a callback once the page renders
    * @example Here this is and example of being used to zoom in and set a popup on load
    */
 
-  async function mapEffect({ leafletElement } = {}) {
-    if ( !leafletElement ) return;
+  async function mapEffect({ leafletElement: map } = {}) {
+    if ( !map ) return;
 
-    const popup = L.popup({
-      maxWidth: 800
-    });
+    // Attempt to fetch data
+    let response;
+    try {
+      response = await axios.get( 'https://disease.sh/v3/covid-19/countries' );
+      console.log( 'Response: ', response );
+    } catch ( e ) {
+      console.error( 'Error fetching data: ', e );
+    }
 
-    const location = await getCurrentLocation().catch(() => LOCATION );
+    // Destructure data
+    const { data } = response;
+    const hasData = Array.isArray( data ) && data.length > 0;
 
-    const { current = {} } = markerRef || {};
-    const { leafletElement: marker } = current;
+    // If there is no data (error), return
+    if ( !hasData ) return;
 
-    marker.setLatLng( location );
-    popup.setLatLng( location );
-    popup.setContent( popupContentHello );
+    // Transform data to GeoJSON
+    const geoJSON = {
+      type: 'FeatureCollection',
+      features: data.map(( country = {}) => {
+        const { countryInfo = {} } = country;
+        const { lat, long: lng } = countryInfo;
 
-    setTimeout( async () => {
-      await promiseToFlyTo( leafletElement, {
-        zoom: ZOOM,
-        center: location
-      });
+        return {
+          type: 'Feature',
+          properties: {
+            ...country,
+          },
+          geometry: {
+            type: 'Point',
+            coordinates: [lng, lat],
+          },
+        };
+      }),
+    };
 
-      marker.bindPopup( popup );
-
-      setTimeout(() => marker.openPopup(), timeToOpenPopupAfterZoom );
-      setTimeout(() => marker.setPopupContent( popupContentGatsby ), timeToUpdatePopupAfterZoom );
-    }, timeToZoom );
+    // Insert GeoJSON into map
+    const geoJSONLayers = new L.GeoJSON( geoJSON );
+    geoJSONLayers.addTo( map );
   }
 
   const mapSettings = {
     center: CENTER,
     defaultBaseMap: 'OpenStreetMap',
     zoom: DEFAULT_ZOOM,
-    mapEffect
+    mapEffect,
   };
 
   return (
@@ -87,9 +81,7 @@ const IndexPage = () => {
         <title>Home Page</title>
       </Helmet>
 
-      <Map {...mapSettings}>
-        <Marker ref={markerRef} position={CENTER} />
-      </Map>
+      <Map {...mapSettings} />
 
       <Container type="content" className="text-center home-start">
         <h2>Still Getting Started?</h2>
