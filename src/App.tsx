@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { HTMLSelect } from "@blueprintjs/core";
 import { USAMap } from "./components/Map";
+import { Dashboard } from "./components/CovidDashboard";
 
 function App() {
   const [mapState, setMapState] = useState("states");
@@ -15,10 +16,12 @@ function App() {
           borderBottomRightRadius: "unset",
           overflow: "hidden",
         }}
-      >
+      > 
         <USAMap mode={mapState} />
-      </div>
+        
 
+      </div>
+      
       <HTMLSelect
         defaultValue={mapState}
         onChange={(e) => setMapState(e.target.value)}
@@ -26,6 +29,7 @@ function App() {
         <option value={"county"}>Counties</option>
         <option value={"states"}>States</option>
       </HTMLSelect>
+      <Dashboard/>
     </>
   );
 }
