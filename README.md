@@ -1,30 +1,23 @@
-# React + TypeScript + Vite
+# CovidMap
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/ethanl21/CovidMap/build-and-deploy.yml)
+![GitHub License](https://img.shields.io/github/license/ethanl21/CovidMap)
 
-Currently, two official plugins are available:
+CovidMap is a dashboard used to track metrics related to the COVID-10 pandemic.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Usage
 
-## Expanding the ESLint configuration
+CovidMap is a static SPA using React and Vite. To deploy a copy, clone the repository and enter the following commands:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module",
-    project: ["./tsconfig.json", "./tsconfig.node.json"],
-    tsconfigRootDir: __dirname,
-  },
-};
+```sh
+npm i
+npm build
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+The built files will be located in `dist/`.
+
+# Attribution
+
+CovidMap was created by Allan Cortes, Raquel Cruz, Jose Gonzalez, and Ethan Lew for CPSC 349 at CSUF.
+
+Data is sourced from the NYT (via [disease.sh](https://disease.sh/docs/)) and [Covid Act Now](https://covidactnow.org)
