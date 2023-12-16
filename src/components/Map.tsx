@@ -198,7 +198,7 @@ export const USAMap = (props: USAMapProps) => {
         style={{ height: "100%" }}
       >
         <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | <a href="https://disease.sh/docs/#/COVID-19%3A%20NYT/get_v3_covid_19_nyt_states">NYT @ disease.sh</a>'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
