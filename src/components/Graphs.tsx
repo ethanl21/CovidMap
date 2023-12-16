@@ -59,6 +59,15 @@ const vaccinationRateBarOptions = {
   },
 };
 
+const bedsPieOptions = {
+  plugins: {
+    title: {
+      display: true,
+      text: "Hospital Beds Occupied by COVID patients (%)",
+    },
+  },
+};
+
 const riskLevelBarOptions = {
   legend: {
     display: false,
@@ -177,7 +186,7 @@ export const Graphs = (props: GraphsProps) => {
             stateTotalData.riskLevels.infectionRate,
             stateTotalData.riskLevels.icuCapacityRatio,
           ],
-          backgroundColor: "rgba(255, 99, 132, 0.5)",
+          backgroundColor: "rgba(220, 67, 255, 0.5)",
         },
       ],
     };
@@ -204,7 +213,7 @@ export const Graphs = (props: GraphsProps) => {
             nationalTotalData.riskLevels.infectionRate,
             nationalTotalData.riskLevels.icuCapacityRatio,
           ],
-          backgroundColor: "rgba(255, 99, 132, 0.5)",
+          backgroundColor: "rgba(67, 255, 174, 0.5)",
         },
       ],
     };
@@ -223,7 +232,7 @@ export const Graphs = (props: GraphsProps) => {
               data={stateVaccinationDataset}
             />
 
-            <Pie data={covidBedsDataset} />
+            <Pie data={covidBedsDataset} options={bedsPieOptions} />
           </div>
         </div>
 
