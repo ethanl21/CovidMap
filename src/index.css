@@ -5,3 +5,7 @@
 @import "@blueprintjs/select/lib/css/blueprint-select.css";
 @import "leaflet.markercluster/dist/MarkerCluster.css";
 @import "leaflet.markercluster/dist/MarkerCluster.Default.css";
+
+td {
+  border: 1px solid black;
+}
