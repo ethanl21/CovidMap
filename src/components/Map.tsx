@@ -8,6 +8,7 @@ import axios from "axios";
 import countyGeoJSON from "../assets/geoJSON/county.json";
 import statesGeoJSON from "../assets/geoJSON/states.json";
 import stateNames from "../assets/states.json";
+import { formatNumber } from "../lib/numberFormat";
 
 interface GeoJSONChildProps {
   data: GeoJsonObject;
@@ -57,10 +58,10 @@ const GeoJSONChild = (props: GeoJSONChildProps) => {
                 popupContent = `
                 <h1>${dataItem?.county} County, ${dataItem?.state}</h1>
                 <p><strong>Cases:</strong> ${
-                  (dataItem && dataItem.cases) || "No Data"
+                  (dataItem && formatNumber(dataItem.cases)) || "No Data"
                 }<br />
                 <strong>Deaths:</strong> ${
-                  (dataItem && dataItem.deaths) || "No Data"
+                  (dataItem && formatNumber(dataItem.deaths)) || "No Data"
                 }<br />
                 <strong>Updated:</strong> ${
                   (dataItem && new Date(dataItem.updated).toLocaleString()) ||
@@ -79,10 +80,10 @@ const GeoJSONChild = (props: GeoJSONChildProps) => {
                 popupContent = `
               <h1>${dataItem?.state}</h1>
               <p><strong>Cases:</strong> ${
-                (dataItem && dataItem.cases) || "No Data"
+                (dataItem && formatNumber(dataItem.cases)) || "No Data"
               }<br />
                 <strong>Deaths:</strong> ${
-                  (dataItem && dataItem.deaths) || "No Data"
+                  (dataItem && formatNumber(dataItem.deaths)) || "No Data"
                 }<br />
                 <strong>Updated:</strong> ${
                   (dataItem && new Date(dataItem.updated).toLocaleString()) ||
