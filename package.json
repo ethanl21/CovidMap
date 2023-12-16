@@ -18,6 +18,7 @@
     "@blueprintjs/icons": "^5.5.0",
     "@blueprintjs/select": "^5.0.20",
     "axios": "^1.6.2",
+    "axios-hooks": "^5.0.2",
     "geojson": "^0.5.0",
     "leaflet": "^1.9.4",
     "leaflet.markercluster": "^1.5.3",
