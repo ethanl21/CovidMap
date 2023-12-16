@@ -51,7 +51,9 @@ function App() {
           alignItems: "start",
         }}
       >
-        <h1>Tables</h1>
+        <h1>
+          Tables <a href="https://covidactnow.org">[source]</a>
+        </h1>
         <FormGroup label="State">
           <HTMLSelect
             value={selectedState}
@@ -80,7 +82,9 @@ function App() {
             alignItems: "start",
           }}
         >
-          <h1>Charts</h1>
+          <h1>
+            Charts <a href="https://covidactnow.org">[source]</a>
+          </h1>
           <FormGroup label="State">
             <HTMLSelect
               value={selectedState}
