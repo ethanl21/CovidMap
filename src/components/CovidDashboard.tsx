@@ -1,7 +1,12 @@
-import React, { useState } from "react";
 import useAxios from "axios-hooks";
+import stateAbbr from "../assets/state-abbr.json";
+import { flipObject } from "../lib/flipObject";
 
-interface DashboardProps {}
+interface DashboardProps {
+  stateCode: string;
+}
+
+const stateCodeToStateName = flipObject(stateAbbr);
 
 interface StateData {
   // confirmed, active, recovered, and fatal
@@ -13,7 +18,7 @@ interface StateData {
   tests: number;
 }
 
-export const Dashboard: React.FC<DashboardProps> = () => {
+export const Dashboard: React.FC<DashboardProps> = (props: DashboardProps) => {
   //get state info
   const [{ data: stateTotalData, loading: stateDataLoading }] = useAxios(
     "https://disease.sh/v3/covid-19/states",
@@ -26,8 +31,6 @@ export const Dashboard: React.FC<DashboardProps> = () => {
   const [{ data: USATotalData, loading: USADataLoading }] = useAxios(
     "  https://disease.sh/v3/covid-19/countries/usa",
   );
-  //keep track of user selection
-  const [selectedState, setSelectedState] = useState<string | null>(null);
 
   // Check if the data is still loading
   if (stateDataLoading || globalDataLoading || USADataLoading) {
@@ -38,10 +41,6 @@ export const Dashboard: React.FC<DashboardProps> = () => {
   if (!stateTotalData || !globalTotalData || !USATotalData) {
     return <div>Error fetching data</div>;
   }
-  //when user selects new state update
-  const handleStateChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedState(event.target.value);
-  };
 
   return (
     <div
@@ -135,64 +134,53 @@ export const Dashboard: React.FC<DashboardProps> = () => {
           flexDirection: "column",
         }}
       >
-        <label>Select a state: </label>
-        <select onChange={handleStateChange} value={selectedState || ""}>
-          <option value="" disabled>
-            Select a state
-          </option>
-          {stateTotalData.map((state: StateData) => (
-            <option key={state.state} value={state.state}>
-              {state.state}
-            </option>
-          ))}
-        </select>
+        <div>
+          <table style={{ borderCollapse: "collapse", width: "100%" }}>
+            <thead style={{ backgroundColor: "#333", color: "#fff" }}>
+              <tr>
+                <th colSpan={3}>
+                  {stateCodeToStateName[props.stateCode]} Data
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {stateTotalData
+                .filter(
+                  (state: { state: string }) =>
+                    state.state === stateCodeToStateName[props.stateCode],
+                )
+                .map((state: StateData) => (
+                  <>
+                    <tr>
+                      <td>
+                        <strong>Confirmed Cases:</strong>
+                      </td>
+                      <td>{state.cases.toLocaleString()}</td>
+                    </tr>
 
-        {selectedState && (
-          <div>
-            <table style={{ borderCollapse: "collapse", width: "100%" }}>
-              <thead style={{ backgroundColor: "#333", color: "#fff" }}>
-                <tr>
-                  <th colSpan={3}>{selectedState} Data</th>
-                </tr>
-              </thead>
-              <tbody>
-                {stateTotalData
-                  .filter(
-                    (state: { state: string }) => state.state === selectedState,
-                  )
-                  .map((state: StateData) => (
-                    <>
-                      <tr>
-                        <td>
-                          <strong>Confirmed Cases:</strong>
-                        </td>
-                        <td>{state.cases.toLocaleString()}</td>
-                      </tr>
-
-                      <tr>
-                        <td>
-                          <strong>Active Cases :</strong>
-                        </td>
-                        <td>{state.active.toLocaleString()}</td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <strong>Total Recovered:</strong>
-                        </td>
-                        <td> {state.recovered.toLocaleString()}</td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <strong>Total Deaths:</strong>
-                        </td>
-                        <td> {state.deaths.toLocaleString()}</td>
-                      </tr>
-                    </>
-                  ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+                    <tr>
+                      <td>
+                        <strong>Active Cases :</strong>
+                      </td>
+                      <td>{state.active.toLocaleString()}</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <strong>Total Recovered:</strong>
+                      </td>
+                      <td> {state.recovered.toLocaleString()}</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <strong>Total Deaths:</strong>
+                      </td>
+                      <td> {state.deaths.toLocaleString()}</td>
+                    </tr>
+                  </>
+                ))}
+            </tbody>
+          </table>
+        </div>
       </div>
       <div></div>
     </div>
