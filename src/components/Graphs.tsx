@@ -190,8 +190,6 @@ export const Graphs = (props: GraphsProps) => {
         },
       ],
     };
-
-    console.log(stateTotalData.cdcTransmissionLevel);
   } else {
     stateVaccinationDataset = { labels: vaccinationLabels, datasets: [] };
     covidBedsDataset = { labels: bedLabels, datasets: [] };
