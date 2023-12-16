@@ -17,9 +17,6 @@ dependencies:
   axios:
     specifier: ^1.6.2
     version: 1.6.2
-  axios-hooks:
-    specifier: ^5.0.2
-    version: 5.0.2(axios@1.6.2)(react@18.2.0)
   geojson:
     specifier: ^0.5.0
     version: 0.5.0
@@ -109,16 +106,6 @@ packages:
       }
     engines: { node: ">=0.10.0" }
     dev: true
-
-  /@babel/runtime@7.23.4:
-    resolution:
-      {
-        integrity: sha512-2Yv65nlWnWlSpe3fXEyX5i7fx5kIKo4Qbcj+hMO0odwaneFjfXw5fdum+4yL20O0QiaHpia0cYQ9xpNMqrBwHg==,
-      }
-    engines: { node: ">=6.9.0" }
-    dependencies:
-      regenerator-runtime: 0.14.1
-    dev: false
 
   /@babel/runtime@7.23.6:
     resolution:
@@ -1246,22 +1233,6 @@ packages:
       }
     dev: false
 
-  /axios-hooks@5.0.2(axios@1.6.2)(react@18.2.0):
-    resolution:
-      {
-        integrity: sha512-A047WTutYx5mYzfPc+CFblEliHLlLQ9zyrCJGtQeu5RyX0aLiAaOqqSvu2C6ts4fHFZfK9IPflqppIeIjldlrg==,
-      }
-    peerDependencies:
-      axios: ">=1.0.0"
-      react: ^16.8.0-0 || ^17.0.0 || ^18.0.0
-    dependencies:
-      "@babel/runtime": 7.23.4
-      axios: 1.6.2
-      dequal: 2.0.3
-      lru-cache: 10.1.0
-      react: 18.2.0
-    dev: false
-
   /axios@1.6.2:
     resolution:
       {
@@ -1504,14 +1475,6 @@ packages:
         integrity: sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==,
       }
     engines: { node: ">=0.4.0" }
-    dev: false
-
-  /dequal@2.0.3:
-    resolution:
-      {
-        integrity: sha512-0je+qPKHEMohvfRTCEo3CrPG6cAzAYgmzKyxRiYSSDkS6eGJdyVJm7WaYA5ECaAD9wLB2T4EEeymA5aFVcYXCA==,
-      }
-    engines: { node: ">=6" }
     dev: false
 
   /dir-glob@3.0.1:
@@ -2321,14 +2284,6 @@ packages:
       }
     dependencies:
       tslib: 2.6.2
-    dev: false
-
-  /lru-cache@10.1.0:
-    resolution:
-      {
-        integrity: sha512-/1clY/ui8CzjKFyjdvwPWJUYKiFVXG2I2cY0ssG7h4+hwk+XOIX7ZSG9Q7TW8TW3Kp3BUSqgFWBLgL4PJ+Blag==,
-      }
-    engines: { node: 14 || >=16.14 }
     dev: false
 
   /lru-cache@6.0.0:
