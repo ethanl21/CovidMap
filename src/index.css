@@ -1,7 +1,4 @@
 @import "modern-normalize/modern-normalize.css";
-@import "leaflet/dist/leaflet.css";
 @import "@blueprintjs/core/lib/css/blueprint.css";
 @import "@blueprintjs/icons/lib/css/blueprint-icons.css";
 @import "@blueprintjs/select/lib/css/blueprint-select.css";
-@import "leaflet.markercluster/dist/MarkerCluster.css";
-@import "leaflet.markercluster/dist/MarkerCluster.Default.css";
