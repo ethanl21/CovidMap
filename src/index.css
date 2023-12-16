@@ -2,6 +2,15 @@
 @import "leaflet/dist/leaflet.css";
 @import "@blueprintjs/core/lib/css/blueprint.css";
 
+body {
+  background-color: lightgray;
+}
+
+main {
+  background-color: aliceblue;
+  padding: 1rem 0;
+}
+
 td {
   border: 1px solid black;
 }
