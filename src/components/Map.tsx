@@ -1,13 +1,18 @@
+import { useEffect } from "react";
+import useAxios from "axios-hooks";
+
+// leaflet modules
 import { MapContainer, TileLayer, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet.markercluster";
 import type { GeoJsonObject } from "geojson";
-import { useEffect, useState } from "react";
-import axios from "axios";
 
+// json files
 import countyGeoJSON from "../assets/geoJSON/county.json";
 import statesGeoJSON from "../assets/geoJSON/states.json";
 import stateNames from "../assets/states.json";
+
+// other
 import { formatNumber } from "../lib/numberFormat";
 
 interface GeoJSONChildProps {
@@ -161,33 +166,13 @@ export const USAMap = (props: USAMapProps) => {
   const countyGJ: GeoJsonObject = countyGeoJSON as GeoJsonObject;
   const statesGJ: GeoJsonObject = statesGeoJSON as GeoJsonObject;
 
-  const [stateTotalData, setStateTotalData] = useState<StateData[]>([]);
-  const [countyTotalData, setCountyTotalData] = useState<CountyData[]>([]);
+  // prettier-ignore
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [ { data: stateTotalData, loading: stateDataLoading}] = useAxios("https://disease.sh/v3/covid-19/nyt/states?lastdays=1");
 
-  // fetch data from NYT api
-  useEffect(() => {
-    axios
-      .get("https://disease.sh/v3/covid-19/nyt/states?lastdays=1")
-      .then((response) => {
-        const { data } = response;
-        setStateTotalData(data);
-      })
-      .catch((e) => {
-        console.error(e);
-      });
-  }, []);
-
-  useEffect(() => {
-    axios
-      .get("https://disease.sh/v3/covid-19/nyt/counties?lastdays=1")
-      .then((response) => {
-        const { data } = response;
-        setCountyTotalData(data);
-      })
-      .catch((e) => {
-        console.error(e);
-      });
-  }, []);
+  // prettier-ignore
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [{ data: countyTotalData, loading: countyDataLoading}] = useAxios("https://disease.sh/v3/covid-19/nyt/states?lastdays=1");
 
   return (
     <>
@@ -202,18 +187,22 @@ export const USAMap = (props: USAMapProps) => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
-        <GeoJSONChild
-          data={countyGJ}
-          mode="county"
-          itemData={countyTotalData}
-          isVisible={props.mode === "county"}
-        />
-        <GeoJSONChild
-          data={statesGJ}
-          mode="states"
-          itemData={stateTotalData}
-          isVisible={props.mode === "states"}
-        />
+        {!countyDataLoading && (
+          <GeoJSONChild
+            data={countyGJ}
+            mode="county"
+            itemData={countyTotalData}
+            isVisible={props.mode === "county"}
+          />
+        )}
+        {!stateDataLoading && (
+          <GeoJSONChild
+            data={statesGJ}
+            mode="states"
+            itemData={stateTotalData}
+            isVisible={props.mode === "states"}
+          />
+        )}
       </MapContainer>
     </>
   );
