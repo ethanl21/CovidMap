@@ -26,7 +26,7 @@ export const USAMap = (props: USAMapProps) => {
 
   // prettier-ignore
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [{ data: countyTotalData, loading: countyDataLoading}] = useAxios("https://disease.sh/v3/covid-19/nyt/states?lastdays=1");
+  const [{ data: countyTotalData, loading: countyDataLoading}] = useAxios("https://disease.sh/v3/covid-19/nyt/counties?lastdays=1");
 
   return (
     <>
