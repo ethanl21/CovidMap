@@ -1,33 +1,31 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
+import { HTMLSelect } from "@blueprintjs/core";
+import { USAMap } from "./components/Map";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [mapState, setMapState] = useState("states");
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div
+        style={{
+          height: "80svh",
+          margin: "2rem",
+          borderRadius: "1rem",
+          borderBottomRightRadius: "unset",
+          overflow: "hidden",
+        }}
+      >
+        <USAMap mode={mapState} />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+
+      <HTMLSelect
+        defaultValue={mapState}
+        onChange={(e) => setMapState(e.target.value)}
+      >
+        <option value={"county"}>Counties</option>
+        <option value={"states"}>States</option>
+      </HTMLSelect>
     </>
   );
 }
