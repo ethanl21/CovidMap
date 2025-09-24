@@ -1,12 +1,14 @@
 import useAxios from "axios-hooks";
 import stateAbbr from "../assets/state-abbr.json";
-import { flipObject } from "../lib/flipObject";
+import React from "react";
 
 interface DashboardProps {
   stateCode: string;
 }
 
-const stateCodeToStateName = flipObject(stateAbbr);
+const stateCodeToStateName = Object.fromEntries(
+  Object.entries(stateAbbr).map(([key, value]) => [value, key]),
+);
 
 interface StateData {
   state: string;
@@ -150,15 +152,15 @@ export const CovidDashboard: React.FC<DashboardProps> = (
                     state.state === stateCodeToStateName[props.stateCode],
                 )
                 .map((state: StateData) => (
-                  <>
-                    <tr key={crypto.randomUUID()}>
+                  <React.Fragment key={crypto.randomUUID()}>
+                    <tr>
                       <td>
                         <strong>Confirmed Cases:</strong>
                       </td>
                       <td>{(state.cases as number).toLocaleString()}</td>
                     </tr>
 
-                    <tr key={crypto.randomUUID()}>
+                    <tr>
                       <td>
                         <strong>Total Recovered:</strong>
                       </td>
@@ -168,13 +170,13 @@ export const CovidDashboard: React.FC<DashboardProps> = (
                           : (state.recovered as number).toLocaleString()}
                       </td>
                     </tr>
-                    <tr key={crypto.randomUUID()}>
+                    <tr>
                       <td>
                         <strong>Total Deaths:</strong>
                       </td>
                       <td> {(state.deaths as number).toLocaleString()}</td>
                     </tr>
-                  </>
+                  </React.Fragment>
                 ))}
             </tbody>
           </table>

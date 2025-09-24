@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { USAMap } from "./components/Map";
+import { USAMap } from "./components/USAMap";
 import { CovidDashboard } from "./components/CovidDashboard";
 import { Graphs } from "./components/Graphs";
 

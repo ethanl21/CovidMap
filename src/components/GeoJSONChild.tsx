@@ -1,10 +1,28 @@
 import L from "leaflet";
 import type { GeoJsonObject } from "geojson";
-import { StateData, CountyData } from "../lib/API";
 import { useMap } from "react-leaflet";
 import { useEffect } from "react";
 import stateNames from "../assets/states.json";
-import { formatNumber } from "../lib/numberFormat";
+import numeral from "numeral";
+
+export interface StateData {
+  cases: number;
+  date: string;
+  deaths: number;
+  fips: string;
+  state: string;
+  updated: number;
+}
+
+export interface CountyData {
+  cases: number;
+  county: string;
+  date: string;
+  deaths: number;
+  fips: string;
+  state: string;
+  updated: number;
+}
 
 export interface GeoJSONChildProps {
   data: GeoJsonObject;
@@ -54,10 +72,12 @@ export const GeoJSONChild = (props: GeoJSONChildProps) => {
                 popupContent = `
                   <h1>${dataItem?.county} County, ${dataItem?.state}</h1>
                   <p><strong>Cases:</strong> ${
-                    (dataItem && formatNumber(dataItem.cases)) || "No Data"
+                    (dataItem && numeral(dataItem.cases).format("0.0a")) ||
+                    "No Data"
                   }<br />
                   <strong>Deaths:</strong> ${
-                    (dataItem && formatNumber(dataItem.deaths)) || "No Data"
+                    (dataItem && numeral(dataItem.deaths).format("0.0a")) ||
+                    "No Data"
                   }<br />
                   <strong>Updated:</strong> ${
                     (dataItem && new Date(dataItem.updated).toLocaleString()) ||
@@ -76,10 +96,12 @@ export const GeoJSONChild = (props: GeoJSONChildProps) => {
                 popupContent = `
                 <h1>${dataItem?.state}</h1>
                 <p><strong>Cases:</strong> ${
-                  (dataItem && formatNumber(dataItem.cases)) || "No Data"
+                  (dataItem && numeral(dataItem.cases).format("0.0a")) ||
+                  "No Data"
                 }<br />
                   <strong>Deaths:</strong> ${
-                    (dataItem && formatNumber(dataItem.deaths)) || "No Data"
+                    (dataItem && numeral(dataItem.deaths).format("0.0a")) ||
+                    "No Data"
                   }<br />
                   <strong>Updated:</strong> ${
                     (dataItem && new Date(dataItem.updated).toLocaleString()) ||
