@@ -9,12 +9,10 @@ interface DashboardProps {
 const stateCodeToStateName = flipObject(stateAbbr);
 
 interface StateData {
-  // confirmed, active, recovered, and fatal
   state: string;
   cases: number;
   deaths: number;
   recovered: number;
-  active: number;
   tests: number;
 }
 
@@ -41,6 +39,8 @@ export const Dashboard: React.FC<DashboardProps> = (props: DashboardProps) => {
   if (!stateTotalData || !globalTotalData || !USATotalData) {
     return <div>Error fetching data</div>;
   }
+
+  console.log(stateTotalData);
 
   return (
     <div
@@ -71,25 +71,25 @@ export const Dashboard: React.FC<DashboardProps> = (props: DashboardProps) => {
               <td>
                 <strong>Total Cases:</strong>
               </td>
-              <td>{globalTotalData.cases.toLocaleString()}</td>
+              <td>{(globalTotalData.cases as number).toLocaleString()}</td>
             </tr>
             <tr>
               <td>
                 <strong>Total Deaths:</strong>
               </td>
-              <td>{globalTotalData.deaths.toLocaleString()}</td>
+              <td>{(globalTotalData.deaths as number).toLocaleString()}</td>
             </tr>
             <tr>
               <td>
                 <strong>Total Recovered:</strong>
               </td>
-              <td>{globalTotalData.recovered.toLocaleString()}</td>
+              <td>{(globalTotalData.recovered as number).toLocaleString()}</td>
             </tr>
             <tr>
               <td>
                 <strong>Critical Condition:</strong>
               </td>
-              <td>{globalTotalData.critical.toLocaleString()}</td>
+              <td>{(globalTotalData.critical as number).toLocaleString()}</td>
             </tr>
           </tbody>
         </table>
@@ -105,25 +105,25 @@ export const Dashboard: React.FC<DashboardProps> = (props: DashboardProps) => {
             <td>
               <strong>Total Cases:</strong>
             </td>
-            <td>{USATotalData.cases.toLocaleString()} </td>
+            <td>{(USATotalData.cases as number).toLocaleString()} </td>
           </tr>
           <tr>
             <td>
               <strong>Total Deaths:</strong>
             </td>
-            <td>{USATotalData.deaths.toLocaleString()} </td>
+            <td>{(USATotalData.deaths as number).toLocaleString()} </td>
           </tr>
           <tr>
             <td>
               <strong>Test Distributed:</strong>
             </td>
-            <td>{USATotalData.recovered.toLocaleString()} </td>
+            <td>{(USATotalData.recovered as number).toLocaleString()} </td>
           </tr>
           <tr>
             <td>
               <strong>Total Recovered:</strong>
             </td>
-            <td>{USATotalData.tests.toLocaleString()} </td>
+            <td>{(USATotalData.tests as number).toLocaleString()} </td>
           </tr>
         </tbody>
       </table>
@@ -155,26 +155,24 @@ export const Dashboard: React.FC<DashboardProps> = (props: DashboardProps) => {
                       <td>
                         <strong>Confirmed Cases:</strong>
                       </td>
-                      <td>{state.cases.toLocaleString()}</td>
+                      <td>{(state.cases as number).toLocaleString()}</td>
                     </tr>
 
                     <tr>
                       <td>
-                        <strong>Active Cases :</strong>
-                      </td>
-                      <td>{state.active.toLocaleString()}</td>
-                    </tr>
-                    <tr>
-                      <td>
                         <strong>Total Recovered:</strong>
                       </td>
-                      <td> {state.recovered.toLocaleString()}</td>
+                      <td>
+                        {state.recovered == 0
+                          ? "Not Reporting"
+                          : (state.recovered as number).toLocaleString()}
+                      </td>
                     </tr>
                     <tr>
                       <td>
                         <strong>Total Deaths:</strong>
                       </td>
-                      <td> {state.deaths.toLocaleString()}</td>
+                      <td> {(state.deaths as number).toLocaleString()}</td>
                     </tr>
                   </>
                 ))}
@@ -186,4 +184,3 @@ export const Dashboard: React.FC<DashboardProps> = (props: DashboardProps) => {
     </div>
   );
 };
-// confirmed, active, recovered, and fatal
