@@ -16,7 +16,9 @@ interface StateData {
   tests: number;
 }
 
-export const Dashboard: React.FC<DashboardProps> = (props: DashboardProps) => {
+export const CovidDashboard: React.FC<DashboardProps> = (
+  props: DashboardProps,
+) => {
   //get state info
   const [{ data: stateTotalData, loading: stateDataLoading }] = useAxios(
     "https://disease.sh/v3/covid-19/states",
@@ -39,8 +41,6 @@ export const Dashboard: React.FC<DashboardProps> = (props: DashboardProps) => {
   if (!stateTotalData || !globalTotalData || !USATotalData) {
     return <div>Error fetching data</div>;
   }
-
-  console.log(stateTotalData);
 
   return (
     <div
@@ -151,14 +151,14 @@ export const Dashboard: React.FC<DashboardProps> = (props: DashboardProps) => {
                 )
                 .map((state: StateData) => (
                   <>
-                    <tr>
+                    <tr key={crypto.randomUUID()}>
                       <td>
                         <strong>Confirmed Cases:</strong>
                       </td>
                       <td>{(state.cases as number).toLocaleString()}</td>
                     </tr>
 
-                    <tr>
+                    <tr key={crypto.randomUUID()}>
                       <td>
                         <strong>Total Recovered:</strong>
                       </td>
@@ -168,7 +168,7 @@ export const Dashboard: React.FC<DashboardProps> = (props: DashboardProps) => {
                           : (state.recovered as number).toLocaleString()}
                       </td>
                     </tr>
-                    <tr>
+                    <tr key={crypto.randomUUID()}>
                       <td>
                         <strong>Total Deaths:</strong>
                       </td>

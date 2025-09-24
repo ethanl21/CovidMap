@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { USAMap } from "./components/Map";
+import { CovidDashboard } from "./components/CovidDashboard";
 import { Graphs } from "./components/Graphs";
 
 import statesAbbr from "./assets/state-abbr.json";
@@ -109,7 +110,7 @@ function App() {
             </fieldset>
           </div>
           <div style={{ padding: "1rem" }}>
-            <Dashboard stateCode={selectedState} />
+            <CovidDashboard stateCode={selectedState} />
           </div>
         </div>
 
