@@ -12,46 +12,21 @@ function App() {
   return (
     <>
       <header>
-        <div style={{ backgroundColor: "lightgray" }}>
-          <div
-            style={{
-              width: "100%",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <h1 style={{ fontSize: "3rem", marginBottom: "0" }}>
-              🦠 CovidMap 💉
-            </h1>
-            <h2>
-              <em>
-                ✨ by Allan Cortes, Raquel Cruz, Jose Gonzalez, and Ethan Lew ✨
-              </em>
+        <div className="bg-gray-200">
+          <hgroup className="flex w-full flex-col items-center justify-center gap-4 p-4">
+            <h1 className="text-5xl font-bold">🦠 CovidMap 💉</h1>
+            <h2 className="text-2xl font-bold italic">
+              ✨ by Allan Cortes, Raquel Cruz, Jose Gonzalez, and Ethan Lew ✨
             </h2>
-          </div>
+          </hgroup>
         </div>
       </header>
 
-      <main>
-        <div
-          style={{
-            padding: "1rem",
-            backgroundColor: "white",
-            margin: "2rem",
-            borderRadius: "1rem",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "start",
-            }}
-          >
-            <h1>Map</h1>
-            <fieldset>
+      <main className="bg-blue-200 p-4">
+        <div className="m-8 rounded-2xl bg-white p-4">
+          <div className="flex items-start justify-between">
+            <h1 className="text-3xl font-bold">Map</h1>
+            <fieldset className="border p-2">
               <legend>Mode</legend>
               <select
                 defaultValue={mapState}
@@ -62,38 +37,23 @@ function App() {
               </select>
             </fieldset>
           </div>
-          <div
-            style={{
-              height: "80svh",
-              margin: "2rem",
-              borderRadius: "1rem",
-              borderBottomRightRadius: "unset",
-              overflow: "hidden",
-            }}
-          >
+          <div className="m-8 h-[80svh] overflow-hidden rounded-2xl rounded-br-none">
             <USAMap mode={mapState} />
           </div>
         </div>
 
-        <div
-          style={{
-            backgroundColor: "white",
-            margin: "2rem",
-            borderRadius: "1rem",
-          }}
-        >
-          <div
-            style={{
-              padding: "1rem",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "start",
-            }}
-          >
-            <h1>
-              Tables <a href="https://covidactnow.org">[source]</a>
-            </h1>
-            <fieldset>
+        <div className="m-8 rounded-2xl bg-white">
+          <div className="flex items-start justify-between p-4">
+            <h2 className="flex flex-row items-center gap-2 text-3xl font-bold">
+              Tables
+              <a
+                className="text-blue-700 visited:text-violet-800"
+                href="https://covidactnow.org"
+              >
+                [<span className="underline">source</span>]
+              </a>
+            </h2>
+            <fieldset className="border p-2">
               <legend>State</legend>
               <select
                 value={selectedState}
@@ -109,30 +69,23 @@ function App() {
               </select>
             </fieldset>
           </div>
-          <div style={{ padding: "1rem" }}>
+          <div className="p-4">
             <CovidDashboard stateCode={selectedState} />
           </div>
         </div>
 
-        <div
-          style={{
-            padding: "1rem",
-            backgroundColor: "white",
-            margin: "2rem",
-            borderRadius: "1rem",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "start",
-            }}
-          >
-            <h1>
-              Charts <a href="https://covidactnow.org">[source]</a>
-            </h1>
-            <fieldset>
+        <div className="m-8 rounded-2xl bg-white p-4">
+          <div className="flex items-start justify-between">
+            <h2 className="flex flex-row items-center gap-2 text-3xl font-bold">
+              Charts
+              <a
+                className="text-blue-700 visited:text-violet-800"
+                href="https://covidactnow.org"
+              >
+                [<span className="underline">source</span>]
+              </a>
+            </h2>
+            <fieldset className="border p-2">
               <legend>State</legend>
               <select
                 value={selectedState}
@@ -153,32 +106,29 @@ function App() {
       </main>
 
       <footer>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            gap: "0.5rem",
-            padding: "1rem",
-            width: "100%",
-            backgroundColor: "lightgray",
-          }}
-        >
-          <a
-            href="https://github.com/ethanl21/CovidMap"
-            rel="noopener"
-            target="_blank"
-          >
-            Source Code
-          </a>
-          •
-          <a href="https://disease.sh" rel="noopener" target="_blank">
-            Map Data Source
-          </a>
-          •
-          <a href="https://covidactnow.org" rel="noopener" target="_blank">
-            Tables and Charts Data Source
-          </a>
-        </div>
+        <nav>
+          <ul className="flex w-full justify-center gap-8 p-4">
+            <li>
+              <a
+                href="https://github.com/ethanl21/CovidMap"
+                rel="noopener"
+                target="_blank"
+              >
+                Source Code
+              </a>
+            </li>
+            <li>
+              <a href="https://disease.sh" rel="noopener" target="_blank">
+                Map Data Source
+              </a>
+            </li>
+            <li>
+              <a href="https://covidactnow.org" rel="noopener" target="_blank">
+                Tables and Charts Data Source
+              </a>
+            </li>
+          </ul>
+        </nav>
       </footer>
     </>
   );

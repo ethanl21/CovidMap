@@ -45,100 +45,96 @@ export const CovidDashboard: React.FC<DashboardProps> = (
   }
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        gap: "200px",
-        padding: "10px",
-        justifyContent: "space-around",
-        border: "10px",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          paddingLeft: "100px",
-        }}
-      >
-        <table style={{ borderCollapse: "collapse", width: "100%" }}>
-          <thead style={{ backgroundColor: "#333", color: "#fff" }}>
+    <div className="flex flex-row justify-around gap-52 p-2.5">
+      <div className="flex flex-col pl-24">
+        <table className="w-full border-collapse">
+          <thead className="bg-gray-800 text-white">
             <tr>
               <th colSpan={3}>Global COVID-19 Data</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>
+              <td className="border">
                 <strong>Total Cases:</strong>
               </td>
-              <td>{(globalTotalData.cases as number).toLocaleString()}</td>
+              <td className="border">
+                {(globalTotalData.cases as number).toLocaleString()}
+              </td>
             </tr>
             <tr>
-              <td>
+              <td className="border">
                 <strong>Total Deaths:</strong>
               </td>
-              <td>{(globalTotalData.deaths as number).toLocaleString()}</td>
+              <td className="border">
+                {(globalTotalData.deaths as number).toLocaleString()}
+              </td>
             </tr>
             <tr>
-              <td>
+              <td className="border">
                 <strong>Total Recovered:</strong>
               </td>
-              <td>{(globalTotalData.recovered as number).toLocaleString()}</td>
+              <td className="border">
+                {(globalTotalData.recovered as number).toLocaleString()}
+              </td>
             </tr>
             <tr>
-              <td>
+              <td className="border">
                 <strong>Critical Condition:</strong>
               </td>
-              <td>{(globalTotalData.critical as number).toLocaleString()}</td>
+              <td className="border">
+                {(globalTotalData.critical as number).toLocaleString()}
+              </td>
             </tr>
           </tbody>
         </table>
       </div>
-      <table style={{ borderCollapse: "collapse", width: "100%" }}>
-        <thead style={{ backgroundColor: "#333", color: "#fff" }}>
+      <table className="w-full border-collapse">
+        <thead className="bg-gray-800 text-white">
           <tr>
             <th colSpan={3}>United States COVID-19 Data</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>
+            <td className="border">
               <strong>Total Cases:</strong>
             </td>
-            <td>{(USATotalData.cases as number).toLocaleString()} </td>
+            <td className="border">
+              {(USATotalData.cases as number).toLocaleString()}{" "}
+            </td>
           </tr>
           <tr>
-            <td>
+            <td className="border">
               <strong>Total Deaths:</strong>
             </td>
-            <td>{(USATotalData.deaths as number).toLocaleString()} </td>
+            <td className="border">
+              {(USATotalData.deaths as number).toLocaleString()}{" "}
+            </td>
           </tr>
           <tr>
-            <td>
+            <td className="border">
               <strong>Test Distributed:</strong>
             </td>
-            <td>{(USATotalData.recovered as number).toLocaleString()} </td>
+            <td className="border">
+              {(USATotalData.recovered as number).toLocaleString()}{" "}
+            </td>
           </tr>
           <tr>
-            <td>
+            <td className="border">
               <strong>Total Recovered:</strong>
             </td>
-            <td>{(USATotalData.tests as number).toLocaleString()} </td>
+            <td className="border">
+              {(USATotalData.tests as number).toLocaleString()}{" "}
+            </td>
           </tr>
         </tbody>
       </table>
 
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
+      <div className="flex flex-col">
         <div>
-          <table style={{ borderCollapse: "collapse", width: "100%" }}>
-            <thead style={{ backgroundColor: "#333", color: "#fff" }}>
+          <table className="w-full border-collapse">
+            <thead className="bg-gray-800 text-white">
               <tr>
                 <th colSpan={3}>
                   {stateCodeToStateName[props.stateCode]} Data
@@ -154,27 +150,32 @@ export const CovidDashboard: React.FC<DashboardProps> = (
                 .map((state: StateData) => (
                   <React.Fragment key={crypto.randomUUID()}>
                     <tr>
-                      <td>
+                      <td className="border">
                         <strong>Confirmed Cases:</strong>
                       </td>
-                      <td>{(state.cases as number).toLocaleString()}</td>
+                      <td className="border">
+                        {(state.cases as number).toLocaleString()}
+                      </td>
                     </tr>
 
                     <tr>
-                      <td>
+                      <td className="border">
                         <strong>Total Recovered:</strong>
                       </td>
-                      <td>
+                      <td className="border">
                         {state.recovered == 0
                           ? "Not Reporting"
                           : (state.recovered as number).toLocaleString()}
                       </td>
                     </tr>
                     <tr>
-                      <td>
+                      <td className="border">
                         <strong>Total Deaths:</strong>
                       </td>
-                      <td> {(state.deaths as number).toLocaleString()}</td>
+                      <td className="border">
+                        {" "}
+                        {(state.deaths as number).toLocaleString()}
+                      </td>
                     </tr>
                   </React.Fragment>
                 ))}

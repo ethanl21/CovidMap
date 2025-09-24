@@ -221,10 +221,10 @@ export const Graphs = (props: GraphsProps) => {
 
   return (
     <>
-      <div className="chart-container">
+      <div className="flex w-full max-w-screen flex-col gap-4 p-4">
         <div>
-          <h2>Vaccines and Hospital Beds</h2>
-          <div className="chart-row">
+          <h3 className="text-2xl font-bold">Vaccines and Hospital Beds</h3>
+          <div className="relative flex h-[20rem] w-full justify-around">
             <Bar
               options={vaccinationRateBarOptions}
               data={stateVaccinationDataset}
@@ -235,8 +235,8 @@ export const Graphs = (props: GraphsProps) => {
         </div>
 
         <div>
-          <h2>Risk Levels</h2>
-          <div className="chart-row">
+          <h3 className="text-2xl font-bold">Risk Levels</h3>
+          <div className="relative flex h-[20rem] w-full justify-around">
             <Bar options={riskLevelBarOptions} data={riskLevelsDataset} />
 
             <Bar options={riskLevelBarOptions} data={nationalAvgDataset} />

@@ -1,4 +1,5 @@
 import L from "leaflet";
+import "leaflet.markercluster";
 import type { GeoJsonObject } from "geojson";
 import { useMap } from "react-leaflet";
 import { useEffect } from "react";

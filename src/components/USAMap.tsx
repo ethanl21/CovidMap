@@ -1,5 +1,4 @@
 import { MapContainer, TileLayer } from "react-leaflet";
-import "leaflet.markercluster";
 import type { GeoJsonObject } from "geojson";
 
 import useAxios from "axios-hooks";
@@ -36,6 +35,8 @@ export const USAMap = (props: USAMapProps) => {
     `${import.meta.env.BASE_URL}/geoJSON/states.json`,
   );
 
+  console.log(countyGeoJSON);
+
   const usCenterCoords: [number, number] = [38, -98.35];
   const countyGJ: GeoJsonObject = countyGeoJSON as GeoJsonObject;
   const statesGJ: GeoJsonObject = statesGeoJSON as GeoJsonObject;
@@ -45,7 +46,7 @@ export const USAMap = (props: USAMapProps) => {
   );
 
   const [{ data: countyTotalData, loading: countyDataLoading }] = useAxios(
-    "https://disease.sh/v3/covid-19/nyt/states?lastdays=1",
+    "https://disease.sh/v3/covid-19/nyt/counties?lastdays=1",
   );
 
   if (
@@ -63,7 +64,7 @@ export const USAMap = (props: USAMapProps) => {
         center={usCenterCoords}
         zoom={5}
         scrollWheelZoom={false}
-        style={{ height: "100%" }}
+        className="h-full"
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | <a href="https://disease.sh/docs/#/COVID-19%3A%20NYT/get_v3_covid_19_nyt_states">NYT @ disease.sh</a>'
