@@ -1,18 +1,18 @@
 name: Build and Deploy
 on:
   push:
-    # We only run this GitHub action upon new commits to `main`
     branches:
       - main
 jobs:
   build-and-deploy:
+    concurrency: ci-${{ github.ref }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v3
         with:
           version: 8.x.x
 
@@ -23,13 +23,10 @@ jobs:
         run: pnpm run build
 
       - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@4.1.4
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          branch: gh-pages
           folder: dist
-          # Remove previous build files
           clean: true
-          # Do not remove the `.nojekyll` file: we have manually added an empty `.nojekyll` file at the root of the `gh-pages` branch and we don't want having to re-create it after each build.
           clean-exclude: |
             .nojekyll
 permissions:
