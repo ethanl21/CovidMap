@@ -5,10 +5,9 @@ import type { GeoJsonObject } from "geojson";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-import countyGeoJSON from "../assets/geoJSON/county.json";
-import statesGeoJSON from "../assets/geoJSON/states.json";
 import stateNames from "../assets/states.json";
 import { formatNumber } from "../lib/numberFormat";
+import useAxios from "axios-hooks";
 
 interface GeoJSONChildProps {
   data: GeoJsonObject;
@@ -157,6 +156,14 @@ export interface USAMapProps {
   mode: string;
 }
 export const USAMap = (props: USAMapProps) => {
+  const [{ data: countyGeoJSON, loading: countyGjLoading }] = useAxios(
+    `${import.meta.env.BASE_URL}/geoJSON/county.json`,
+  );
+
+  const [{ data: statesGeoJSON, loading: statesGjLoading }] = useAxios(
+    `${import.meta.env.BASE_URL}/geoJSON/states.json`,
+  );
+
   const usCenterCoords: [number, number] = [38, -98.35];
   const countyGJ: GeoJsonObject = countyGeoJSON as GeoJsonObject;
   const statesGJ: GeoJsonObject = statesGeoJSON as GeoJsonObject;
@@ -188,6 +195,10 @@ export const USAMap = (props: USAMapProps) => {
         console.error(e);
       });
   }, []);
+
+  if (countyGjLoading || statesGjLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>
