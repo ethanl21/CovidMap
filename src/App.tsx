@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { HTMLSelect, FormGroup } from "@blueprintjs/core";
 import { USAMap } from "./components/Map";
 import { Graphs } from "./components/Graphs";
 
@@ -51,15 +50,16 @@ function App() {
             }}
           >
             <h1>Map</h1>
-            <FormGroup label="Mode">
-              <HTMLSelect
+            <fieldset>
+              <legend>Mode</legend>
+              <select
                 defaultValue={mapState}
                 onChange={(e) => setMapState(e.target.value)}
               >
                 <option value={"county"}>Counties</option>
                 <option value={"states"}>States</option>
-              </HTMLSelect>
-            </FormGroup>
+              </select>
+            </fieldset>
           </div>
           <div
             style={{
@@ -92,8 +92,9 @@ function App() {
             <h1>
               Tables <a href="https://covidactnow.org">[source]</a>
             </h1>
-            <FormGroup label="State">
-              <HTMLSelect
+            <fieldset>
+              <legend>State</legend>
+              <select
                 value={selectedState}
                 onChange={(e) => setSelectedState(e.target.value)}
               >
@@ -104,8 +105,8 @@ function App() {
                     </option>
                   );
                 })}
-              </HTMLSelect>
-            </FormGroup>
+              </select>
+            </fieldset>
           </div>
           <div style={{ padding: "1rem" }}>
             <Dashboard stateCode={selectedState} />
@@ -130,8 +131,9 @@ function App() {
             <h1>
               Charts <a href="https://covidactnow.org">[source]</a>
             </h1>
-            <FormGroup label="State">
-              <HTMLSelect
+            <fieldset>
+              <legend>State</legend>
+              <select
                 value={selectedState}
                 onChange={(e) => setSelectedState(e.target.value)}
               >
@@ -142,8 +144,8 @@ function App() {
                     </option>
                   );
                 })}
-              </HTMLSelect>
-            </FormGroup>
+              </select>
+            </fieldset>
           </div>
           <Graphs stateCode={selectedState} />
         </div>
