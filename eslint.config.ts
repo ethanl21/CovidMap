@@ -1,27 +1,32 @@
 import js from "@eslint/js";
 import globals from "globals";
 import tseslint from "typescript-eslint";
-import pluginReact from "eslint-plugin-react";
 import json from "@eslint/json";
 import css from "@eslint/css";
 import eslintConfigPrettier from "eslint-config-prettier/flat";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
-import { defineConfig } from "eslint/config";
+import { defineConfig, globalIgnores } from "eslint/config";
 
 export default defineConfig([
+  globalIgnores(["dist"]),
   {
-    files: ["**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
-    plugins: { js },
-    extends: ["js/recommended"],
-    languageOptions: { globals: globals.browser },
+    files: ["**/*.{ts,tsx}"],
+    extends: [
+      js.configs.recommended,
+      tseslint.configs.recommended,
+      reactHooks.configs["recommended-latest"],
+      reactRefresh.configs.vite,
+    ],
+    languageOptions: {
+      ecmaVersion: 2020,
+      globals: globals.browser,
+    },
   },
-  tseslint.configs.recommended,
-  pluginReact.configs.flat.recommended,
   {
     files: ["**/*.json"],
     plugins: { json },
-    language: "json/json",
+    language: "json/jsonc",
     extends: ["json/recommended"],
   },
   {
@@ -30,7 +35,5 @@ export default defineConfig([
     language: "css/css",
     extends: ["css/recommended"],
   },
-  reactHooks.configs["recommended-latest"],
-  reactRefresh.configs.vite,
   eslintConfigPrettier,
 ]);
