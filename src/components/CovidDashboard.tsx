@@ -1,6 +1,16 @@
 import useAxios from "axios-hooks";
 import stateAbbr from "../assets/state-abbr.json";
-import React from "react";
+import React, { useMemo } from "react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Loading } from "@/components/Loading";
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 
 interface DashboardProps {
   stateCode: string;
@@ -9,14 +19,6 @@ interface DashboardProps {
 const stateCodeToStateName = Object.fromEntries(
   Object.entries(stateAbbr).map(([key, value]) => [value, key]),
 );
-
-interface StateData {
-  state: string;
-  cases: number;
-  deaths: number;
-  recovered: number;
-  tests: number;
-}
 
 export const CovidDashboard: React.FC<DashboardProps> = (
   props: DashboardProps,
@@ -34,9 +36,17 @@ export const CovidDashboard: React.FC<DashboardProps> = (
     "  https://disease.sh/v3/covid-19/countries/usa",
   );
 
+  const stateData = useMemo(() => {
+    if (stateDataLoading) return {};
+    return stateTotalData.filter(
+      (state: { state: string }) =>
+        state.state === stateCodeToStateName[props.stateCode],
+    )[0];
+  }, [props.stateCode, stateDataLoading, stateTotalData]);
+
   // Check if the data is still loading
   if (stateDataLoading || globalDataLoading || USADataLoading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   // Check if there is an error fetching data
@@ -45,144 +55,138 @@ export const CovidDashboard: React.FC<DashboardProps> = (
   }
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        gap: "200px",
-        padding: "10px",
-        justifyContent: "space-around",
-        border: "10px",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          paddingLeft: "100px",
-        }}
-      >
-        <table style={{ borderCollapse: "collapse", width: "100%" }}>
-          <thead style={{ backgroundColor: "#333", color: "#fff" }}>
-            <tr>
-              <th colSpan={3}>Global COVID-19 Data</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <strong>Total Cases:</strong>
-              </td>
-              <td>{(globalTotalData.cases as number).toLocaleString()}</td>
-            </tr>
-            <tr>
-              <td>
-                <strong>Total Deaths:</strong>
-              </td>
-              <td>{(globalTotalData.deaths as number).toLocaleString()}</td>
-            </tr>
-            <tr>
-              <td>
-                <strong>Total Recovered:</strong>
-              </td>
-              <td>{(globalTotalData.recovered as number).toLocaleString()}</td>
-            </tr>
-            <tr>
-              <td>
-                <strong>Critical Condition:</strong>
-              </td>
-              <td>{(globalTotalData.critical as number).toLocaleString()}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <table style={{ borderCollapse: "collapse", width: "100%" }}>
-        <thead style={{ backgroundColor: "#333", color: "#fff" }}>
-          <tr>
-            <th colSpan={3}>United States COVID-19 Data</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              <strong>Total Cases:</strong>
-            </td>
-            <td>{(USATotalData.cases as number).toLocaleString()} </td>
-          </tr>
-          <tr>
-            <td>
-              <strong>Total Deaths:</strong>
-            </td>
-            <td>{(USATotalData.deaths as number).toLocaleString()} </td>
-          </tr>
-          <tr>
-            <td>
-              <strong>Test Distributed:</strong>
-            </td>
-            <td>{(USATotalData.recovered as number).toLocaleString()} </td>
-          </tr>
-          <tr>
-            <td>
-              <strong>Total Recovered:</strong>
-            </td>
-            <td>{(USATotalData.tests as number).toLocaleString()} </td>
-          </tr>
-        </tbody>
-      </table>
+    <>
+      <div className="flex flex-row justify-center gap-8">
+        <Card>
+          <CardHeader>
+            <CardTitle>Global Data</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Category</TableHead>
+                  <TableHead>Value</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                <TableRow>
+                  <TableHead scope="row" className="font-medium">
+                    Cases
+                  </TableHead>
+                  <TableCell>
+                    {(globalTotalData.cases as number).toLocaleString()}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableHead scope="row">Deaths</TableHead>
+                  <TableCell>
+                    {(globalTotalData.deaths as number).toLocaleString()}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableHead scope="row">Recovered</TableHead>
+                  <TableCell>
+                    {(globalTotalData.recovered as number).toLocaleString()}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableHead scope="row">Critical Condition</TableHead>
+                  <TableCell>
+                    {(globalTotalData.critical as number).toLocaleString()}
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
 
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        <div>
-          <table style={{ borderCollapse: "collapse", width: "100%" }}>
-            <thead style={{ backgroundColor: "#333", color: "#fff" }}>
-              <tr>
-                <th colSpan={3}>
-                  {stateCodeToStateName[props.stateCode]} Data
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {stateTotalData
-                .filter(
-                  (state: { state: string }) =>
-                    state.state === stateCodeToStateName[props.stateCode],
-                )
-                .map((state: StateData) => (
-                  <React.Fragment key={crypto.randomUUID()}>
-                    <tr>
-                      <td>
-                        <strong>Confirmed Cases:</strong>
-                      </td>
-                      <td>{(state.cases as number).toLocaleString()}</td>
-                    </tr>
+        <Card>
+          <CardHeader>
+            <CardTitle>USA</CardTitle>
+          </CardHeader>
 
-                    <tr>
-                      <td>
-                        <strong>Total Recovered:</strong>
-                      </td>
-                      <td>
-                        {state.recovered == 0
-                          ? "Not Reporting"
-                          : (state.recovered as number).toLocaleString()}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <strong>Total Deaths:</strong>
-                      </td>
-                      <td> {(state.deaths as number).toLocaleString()}</td>
-                    </tr>
-                  </React.Fragment>
-                ))}
-            </tbody>
-          </table>
-        </div>
+          <CardContent>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Category</TableHead>
+                  <TableHead>Value</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                <TableRow>
+                  <TableHead scope="row" className="font-medium">
+                    Cases
+                  </TableHead>
+                  <TableCell>
+                    {(stateData.cases as number).toLocaleString()}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableHead scope="row">Deaths</TableHead>
+                  <TableCell>
+                    {(USATotalData.deaths as number).toLocaleString()}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableHead scope="row">Recovered</TableHead>
+                  <TableCell>
+                    {(USATotalData.recovered as number).toLocaleString()}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableHead scope="row">Tests Distributed</TableHead>
+                  <TableCell>
+                    {(USATotalData.tests as number).toLocaleString()}
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>{stateCodeToStateName[props.stateCode]}</CardTitle>
+          </CardHeader>
+
+          <CardContent>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Category</TableHead>
+                  <TableHead>Value</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                <TableRow>
+                  <TableHead scope="row" className="font-medium">
+                    Cases
+                  </TableHead>
+                  <TableCell>
+                    {(stateData.cases as number).toLocaleString()}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableHead scope="row">Deaths</TableHead>
+                  <TableCell>
+                    {(stateData.deaths as number).toLocaleString()}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableHead scope="row">Recovered</TableHead>
+                  <TableCell>
+                    {stateData.recovered === 0
+                      ? "Not Reporting"
+                      : (stateData.recovered as number).toLocaleString()}
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
       </div>
-      <div></div>
-    </div>
+    </>
   );
 };
