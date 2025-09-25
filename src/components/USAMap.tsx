@@ -3,6 +3,7 @@ import type { GeoJsonObject } from "geojson";
 
 import useAxios from "axios-hooks";
 import { GeoJSONChild } from "./GeoJSONChild";
+import { Loading } from "@/components/Loading";
 
 interface StateData {
   cases: number;
@@ -35,8 +36,6 @@ export const USAMap = (props: USAMapProps) => {
     `${import.meta.env.BASE_URL}/geoJSON/states.json`,
   );
 
-  console.log(countyGeoJSON);
-
   const usCenterCoords: [number, number] = [38, -98.35];
   const countyGJ: GeoJsonObject = countyGeoJSON as GeoJsonObject;
   const statesGJ: GeoJsonObject = statesGeoJSON as GeoJsonObject;
@@ -55,7 +54,7 @@ export const USAMap = (props: USAMapProps) => {
     stateDataLoading ||
     countyDataLoading
   ) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   return (
@@ -64,7 +63,7 @@ export const USAMap = (props: USAMapProps) => {
         center={usCenterCoords}
         zoom={5}
         scrollWheelZoom={false}
-        className="h-full"
+        className="size-full"
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | <a href="https://disease.sh/docs/#/COVID-19%3A%20NYT/get_v3_covid_19_nyt_states">NYT @ disease.sh</a>'
