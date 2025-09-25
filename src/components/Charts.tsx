@@ -194,7 +194,7 @@ export const Charts = (props: ChartsProps) => {
             >
               <PieChart>
                 <Pie dataKey="ratio" data={hospitalBedData}>
-                  {hospitalBedData.map((entry, index) => (
+                  {hospitalBedData.map((_entry, index) => (
                     <Cell
                       key={`cell-${index}`}
                       fill={
