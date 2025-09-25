@@ -25,6 +25,15 @@ export interface CountyData {
   updated: number;
 }
 
+function stringToColor(str: string) {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash); // simple hash
+  }
+  const hue = Math.abs(hash) % 360; // map hash to 0-359
+  return `hsl(${hue}, 70%, 60%)`; // fixed saturation & lightness
+}
+
 export interface GeoJSONChildProps {
   data: GeoJsonObject;
   isVisible: boolean;
@@ -47,6 +56,13 @@ export const GeoJSONChild = (props: GeoJSONChildProps) => {
       }
 
       const geoJsonLayer = L.geoJSON(props.data, {
+        style: (feature) => {
+          return {
+            fillColor: feature
+              ? stringToColor(feature?.properties.NAME)
+              : "#a1a1a1",
+          };
+        },
         onEachFeature: (feature, layer) => {
           if (
             feature.geometry.type === "Polygon" ||
