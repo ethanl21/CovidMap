@@ -10,7 +10,7 @@ import markerIconUrl from "leaflet/dist/images/marker-icon.png";
 import markerIconRetinaUrl from "leaflet/dist/images/marker-icon-2x.png";
 import markerShadowUrl from "leaflet/dist/images/marker-shadow.png";
 
-export interface StateData {
+interface StateData {
   cases: number;
   date: string;
   deaths: number;
@@ -19,7 +19,7 @@ export interface StateData {
   updated: number;
 }
 
-export interface CountyData {
+interface CountyData {
   cases: number;
   county: string;
   date: string;
@@ -38,7 +38,7 @@ function stringToColor(str: string) {
   return `hsl(${hue}, 70%, 60%)`; // fixed saturation & lightness
 }
 
-export interface GeoJSONChildProps {
+interface GeoJSONChildProps {
   data: GeoJsonObject;
   isVisible: boolean;
   itemData: StateData[] | CountyData[];

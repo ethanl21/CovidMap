@@ -28,7 +28,7 @@ interface CountyData {
   updated: number;
 }
 
-export interface USAMapProps {
+interface USAMapProps {
   mode: string;
 }
 export const USAMap = (props: USAMapProps) => {

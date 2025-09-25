@@ -25,7 +25,7 @@ import { Loading } from "@/components/Loading";
 const CAN_API_KEY = "47e3b5f2e75a45b599ea0f54afef6396";
 const BASE_URL = "https://api.covidactnow.org/v2";
 
-export interface ChartsProps {
+interface ChartsProps {
   stateCode: string;
 }
 export const Charts = (props: ChartsProps) => {
