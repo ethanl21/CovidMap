@@ -1,6 +1,10 @@
 import { MapContainer, TileLayer } from "react-leaflet";
 import type { GeoJsonObject } from "geojson";
 
+import "leaflet/dist/leaflet.css";
+import "leaflet.markercluster/dist/MarkerCluster.css";
+import "leaflet.markercluster/dist/MarkerCluster.Default.css";
+
 import useAxios from "axios-hooks";
 import { GeoJSONChild } from "./GeoJSONChild";
 import { Loading } from "@/components/Loading";

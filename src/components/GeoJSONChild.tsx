@@ -6,6 +6,10 @@ import { useEffect } from "react";
 import stateNames from "../assets/states.json";
 import numeral from "numeral";
 
+import markerIconUrl from "leaflet/dist/images/marker-icon.png";
+import markerIconRetinaUrl from "leaflet/dist/images/marker-icon-2x.png";
+import markerShadowUrl from "leaflet/dist/images/marker-shadow.png";
+
 export interface StateData {
   cases: number;
   date: string;
@@ -42,6 +46,11 @@ export interface GeoJSONChildProps {
 }
 export const GeoJSONChild = (props: GeoJSONChildProps) => {
   const map = useMap();
+
+  L.Icon.Default.prototype.options.iconUrl = markerIconUrl;
+  L.Icon.Default.prototype.options.iconRetinaUrl = markerIconRetinaUrl;
+  L.Icon.Default.prototype.options.shadowUrl = markerShadowUrl;
+  L.Icon.Default.imagePath = "";
 
   useEffect(() => {
     if (map && props.isVisible) {
