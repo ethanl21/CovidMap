@@ -67,7 +67,7 @@ export const USAMap = (props: USAMapProps) => {
         center={usCenterCoords}
         zoom={5}
         scrollWheelZoom={false}
-        className="size-full"
+        className="z-0 size-full"
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | <a href="https://disease.sh/docs/#/COVID-19%3A%20NYT/get_v3_covid_19_nyt_states">NYT @ disease.sh</a>'

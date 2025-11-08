@@ -22,6 +22,13 @@ import {
   NavigationMenuItem,
   NavigationMenuLink,
 } from "@/components/ui/navigation-menu";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 // state abbreviations
 import statesAbbr from "./assets/state-abbr.json";
@@ -79,7 +86,7 @@ function App() {
                     <SelectValue placeholder="Area"></SelectValue>
                   </SelectTrigger>
 
-                  <SelectContent className="z-[9999]">
+                  <SelectContent>
                     <SelectItem value="county">Counties</SelectItem>
                     <SelectItem value="states">States</SelectItem>
                   </SelectContent>
@@ -187,6 +194,20 @@ function App() {
           })}
         </NavigationMenu>
       </footer>
+
+      {/* disclaimer dialog */}
+      <Dialog defaultOpen>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Disclaimer</DialogTitle>
+            <DialogDescription>
+              This site is not intended to provide medical advice. Some of the
+              sources have stopped updating their statistics, so some of the
+              information held on this site may be outdated or inaccurate.
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }

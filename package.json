@@ -17,6 +17,7 @@
     "**/*.{jsx,tsx,js,ts}": "eslint --fix"
   },
   "dependencies": {
+    "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-navigation-menu": "^1.2.14",
     "@radix-ui/react-select": "^2.2.6",
     "@tailwindcss/vite": "^4.1.13",
