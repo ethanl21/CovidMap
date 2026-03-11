@@ -29,13 +29,34 @@ interface ChartsProps {
   stateCode: string;
 }
 export const Charts = (props: ChartsProps) => {
-  const [{ data: stateTotalData, loading: stateDataLoading }] = useAxios(
+  const [
+    { data: stateTotalData, loading: stateDataLoading, error: stateTotalError },
+  ] = useAxios(
     `${BASE_URL}/state/${props.stateCode}.json?apiKey=${CAN_API_KEY}`,
   );
 
-  const [{ data: nationalTotalData, loading: nationalDataLoading }] = useAxios(
-    `${BASE_URL}/country/US.json?apiKey=${CAN_API_KEY}`,
-  );
+  const [
+    {
+      data: nationalTotalData,
+      loading: nationalDataLoading,
+      error: nationalDataError,
+    },
+  ] = useAxios(`${BASE_URL}/country/US.json?apiKey=${CAN_API_KEY}`);
+
+  if (stateTotalError || nationalDataError) {
+    return (
+      <div className="flex flex-col items-center">
+        <article className="prose">
+          <h2>Error</h2>
+          <p>Could not load chart data. Is the source unavailable?</p>
+          <p>
+            (March 2026: The data source, CovidActNow's API, has gone offline
+            and is no longer accessible.)
+          </p>
+        </article>
+      </div>
+    );
+  }
 
   if (stateDataLoading || nationalDataLoading) {
     return <Loading />;

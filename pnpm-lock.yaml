@@ -71,6 +71,9 @@ importers:
       "@eslint/json":
         specifier: ^0.13.2
         version: 0.13.2
+      "@tailwindcss/typography":
+        specifier: ^0.5.19
+        version: 0.5.19(tailwindcss@4.1.13)
       "@types/geojson":
         specifier: ^7946.0.16
         version: 7946.0.16
@@ -1384,6 +1387,14 @@ packages:
       }
     engines: { node: ">= 10" }
 
+  "@tailwindcss/typography@0.5.19":
+    resolution:
+      {
+        integrity: sha512-w31dd8HOx3k9vPtcQh5QHP9GwKcgbMp87j58qi6xgiBnFFtKEAgCWnDw4qUT8aHwkCp8bKvb/KGKWWHedP0AAg==,
+      }
+    peerDependencies:
+      tailwindcss: ">=3.0.0 || insiders || >=4.0.0-alpha.20 || >=4.0.0-beta.1"
+
   "@tailwindcss/vite@4.1.13":
     resolution:
       {
@@ -1809,6 +1820,14 @@ packages:
         integrity: sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==,
       }
     engines: { node: ">= 8" }
+
+  cssesc@3.0.0:
+    resolution:
+      {
+        integrity: sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==,
+      }
+    engines: { node: ">=4" }
+    hasBin: true
 
   csstype@3.1.3:
     resolution:
@@ -2848,6 +2867,13 @@ packages:
     engines: { node: ">=0.10" }
     hasBin: true
 
+  postcss-selector-parser@6.0.10:
+    resolution:
+      {
+        integrity: sha512-IQ7TZdoaqbT+LCpShg46jnZVlhWD2w6iQYAcYXfHARZ7X1t/UGhhceQDs5X0cGqKvYlHNOuv7Oa1xmb0oQuA3w==,
+      }
+    engines: { node: ">=4" }
+
   postcss@8.5.6:
     resolution:
       {
@@ -3336,6 +3362,12 @@ packages:
     peerDependenciesMeta:
       "@types/react":
         optional: true
+
+  util-deprecate@1.0.2:
+    resolution:
+      {
+        integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==,
+      }
 
   victory-vendor@36.9.2:
     resolution:
@@ -4091,6 +4123,11 @@ snapshots:
       "@tailwindcss/oxide-win32-arm64-msvc": 4.1.13
       "@tailwindcss/oxide-win32-x64-msvc": 4.1.13
 
+  "@tailwindcss/typography@0.5.19(tailwindcss@4.1.13)":
+    dependencies:
+      postcss-selector-parser: 6.0.10
+      tailwindcss: 4.1.13
+
   "@tailwindcss/vite@4.1.13(vite@7.1.7(@types/node@24.5.2)(jiti@2.6.0)(lightningcss@1.30.1)(yaml@2.8.1))":
     dependencies:
       "@tailwindcss/node": 4.1.13
@@ -4365,6 +4402,8 @@ snapshots:
       path-key: 3.1.1
       shebang-command: 2.0.0
       which: 2.0.2
+
+  cssesc@3.0.0: {}
 
   csstype@3.1.3: {}
 
@@ -4918,6 +4957,11 @@ snapshots:
 
   pidtree@0.6.0: {}
 
+  postcss-selector-parser@6.0.10:
+    dependencies:
+      cssesc: 3.0.0
+      util-deprecate: 1.0.2
+
   postcss@8.5.6:
     dependencies:
       nanoid: 3.3.11
@@ -5180,6 +5224,8 @@ snapshots:
       tslib: 2.8.1
     optionalDependencies:
       "@types/react": 19.1.13
+
+  util-deprecate@1.0.2: {}
 
   victory-vendor@36.9.2:
     dependencies:
